@@ -33,7 +33,7 @@ h1 {
 
   <tr><td>Address<br><input type="text" placeholder="Address" name="address" required></td></tr>
 <tr><td>Nextmeeting date<br><input type="date" placeholder="Todays date" name="nmdate" required min="<?php $d =strtotime("+15days"); $d= date("Y-m-d", $d); echo $d?>"></td></tr>
-<tr><td><input type="submit" value="Submit"></td></tr>
+<tr><td><input type="submit" value="Submit" name="Submit"></td></tr>
 </table>
 </body>
 </html> 
