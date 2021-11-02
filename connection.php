@@ -1,32 +1,30 @@
 <?php
+$conn = new mysqli("localhost", "root", "","customerform");
 
-/* Attempt MySQL server connection. Assuming you are running MySQL
-server with default setting (user 'root' with no password) */
-$mysqli = new mysqli("localhost", "root", "", "customer");
- 
 // Check connection
-if($mysqli === false){
-    die("ERROR: Could not connect. " . $mysqli->connect_error);
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+// Escape user inputs for security
+if(isset($_POST['submit'])){
+$clientname = $_POST['client_name'];
+$Guardianname = $_POST['guardian_name'];
+$Guardiantype = $_POST['guardian_type'];
+$Dob = $_POST['dob'];
+$Mobileno = $_POST['mobile_no'];
+$Additionalno = $_POST['anumber'];
+$Address = $_POST['address'];
+$State = $_POST['State'];
+$District = $_POST['district'];
+$Nextfollowupdate = $_POST['next_follow_up_date'];
+$City = $_POST['city'];
+//echo "data is taken";
+$sql = "INSERT INTO userform (client_name, guardian_name, guardian_type, dob, mobile_no, anumber, address, state, district, next_follow_up_date, city ) VALUES ('$clientname', '$Guardianname', '$Guardiantype', '$Dob', '$Mobileno', '$Additionalno', '$Address', '$State', '$District', '$Nextfollowupdate', '$City' )";
+if ($conn->query($sql) === TRUE) {
+  echo "New record created successfully";
+} else {
+  echo "Error: " . $sql . "<br>" . $conn->error;
+}
 }
 
-// Escape user inputs for security
-$firstname = $mysqli->real_escape_string($_REQUEST['fname']);
-$lastname = $mysqli->real_escape_string($_REQUEST['lname']);
-$contactnumber = $mysqli->real_escape_string($_REQUEST['cnumber']);
-$alternatenumber = $mysqli->real_escape_string($_REQUEST['anumber']);
-$guardianname = $mysqli->real_escape_string($_REQUEST['father']);
-$address = $mysqli->real_escape_string($_REQUEST['address']);
-$dateofbirth = $mysqli->real_escape_string($_REQUEST['dob']);
-$todaysdate = $mysqli->real_escape_string($_REQUEST['tdate']);
- 
-$sql = "INSERT INTO form (firstname, lastname, contactnumber, alternatenumber, guardianname, address, dateofbirth, todaysdate) VALUES ('$firstname', '$lastname', '$contactnumber', '$alternatenumber', '$guardianname', '$address', '$dateofbirth', '$todaysdate')";
-if($mysqli->query($sql) === true)
-{
-    echo "records inserted successfully.";
-} else{
-    echo "ERROR: Could not able to execute $sql. " . $mysqli->error;
-}
- 
-// Close connection
-$mysqli->close();
 ?>
